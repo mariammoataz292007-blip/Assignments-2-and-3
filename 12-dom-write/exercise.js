@@ -30,9 +30,18 @@
  * @returns {void}
  */
 export function addProduct(name, price) {
-  // TODO: createElement for each piece, fill them in, append them together,
-  // then append the card to #list. Nothing appears until that last step.
-  throw new Error("addProduct is not written yet");
+  const card = document.createElement("li");
+  card.classList.add("card");
+
+  const heading = document.createElement("h3");
+  heading.textContent = name;
+
+  const priceText = document.createElement("p");
+  priceText.classList.add("price");
+  priceText.textContent = `${price} EGP`;
+
+  card.append(heading, priceText);
+  document.querySelector("#list").append(card);
 }
 
 /**
@@ -43,8 +52,15 @@ export function addProduct(name, price) {
  * @returns {void}
  */
 export function removeProduct(name) {
-  // TODO: find the right card, then call .remove() on it.
-  throw new Error("removeProduct is not written yet");
+  const cards = document.querySelectorAll(".card");
+
+  const card = Array.from(cards).find((item) => {
+    return item.querySelector("h3").textContent === name;
+  });
+
+  if (card) {
+    card.remove();
+  }
 }
 
 /**
@@ -55,8 +71,15 @@ export function removeProduct(name) {
  * @returns {void}
  */
 export function markSoldOut(name) {
-  // TODO: find the card, then classList.add.
-  throw new Error("markSoldOut is not written yet");
+  const cards = document.querySelectorAll(".card");
+
+  const card = Array.from(cards).find((item) => {
+    return item.querySelector("h3").textContent === name;
+  });
+
+  if (card) {
+    card.classList.add("sold-out");
+  }
 }
 
 /**
@@ -65,8 +88,11 @@ export function markSoldOut(name) {
  * @returns {void}
  */
 export function clearProducts() {
-  // TODO: loop over all the cards and remove each one.
-  throw new Error("clearProducts is not written yet");
+  const cards = document.querySelectorAll("#list .card");
+
+  for (const card of cards) {
+    card.remove();
+  }
 }
 
 /**
@@ -90,4 +116,15 @@ export function clearProducts() {
  * Remember `export`.
  */
 
-// TODO: write wireButtons here.
+export function wireButtons() {
+  const addButton = document.querySelector("#add");
+  const resetButton = document.querySelector("#reset");
+
+  addButton.addEventListener("click", () => {
+    addProduct("Notebook", 45);
+  });
+
+  resetButton.addEventListener("click", () => {
+    clearProducts();
+  });
+}
